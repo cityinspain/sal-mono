@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "projects": {
+    "bench": {
+      "projectType": "application",
+      "root": "apps/bench",
+      "sourceRoot": "apps/bench/src",
+      "prefix": "sal-mono",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/bench",
+            "index": "apps/bench/src/index.html",
+            "main": "apps/bench/src/main.ts",
+            "polyfills": "apps/bench/src/polyfills.ts",
+            "tsConfig": "apps/bench/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["apps/bench/src/favicon.ico", "apps/bench/src/assets"],
+            "styles": ["apps/bench/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/bench/src/environments/environment.ts",
+                  "with": "apps/bench/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "bench:build:production"
+            },
+            "development": {
+              "browserTarget": "bench:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bench:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/bench/src/**/*.ts",
+              "apps/bench/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/bench"],
+          "options": {
+            "jestConfig": "apps/bench/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bench-e2e": {
+      "root": "apps/bench-e2e",
+      "sourceRoot": "apps/bench-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/bench-e2e/cypress.json",
+            "tsConfig": "apps/bench-e2e/tsconfig.e2e.json",
+            "devServerTarget": "bench:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bench:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/bench-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "bench"
+}
