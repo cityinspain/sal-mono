@@ -1,0 +1,34 @@
+<div class="mb-4">
+  <label class="block text-gray-700 text-sm font-bold mb-2" [attr.for]="id">{{
+    label
+  }}</label>
+
+  <input
+    #input
+    id="{{ id }}"
+    class="
+      shadow
+      appearance-none
+      border
+      rounded
+      w-full
+      py-2
+      px-3
+      text-gray-700
+      leading-tight
+      focus:outline-none focus:shadow-outline
+    "
+    id="username"
+    type="text"
+    placeholder="{{ placeholder }}"
+    (blur)="onChange($event, input.value)"
+  />
+
+  <!-- <div
+    style="height: 0px"
+    [@visibilityChanged]="!c.pristine && !c.valid"
+    class="error"
+  >
+    <p *ngFor="let error of errors">{{ error }}</p>
+  </div> -->
+</div>

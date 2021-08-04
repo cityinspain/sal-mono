@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bench';
+
+  onLogin(creds: { username: string; password: string }) {
+    console.log(creds);
+  }
 }
